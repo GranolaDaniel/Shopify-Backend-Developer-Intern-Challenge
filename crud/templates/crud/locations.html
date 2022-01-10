@@ -1,0 +1,21 @@
+{% extends 'crud/index.html' %}
+
+{% block content %}
+    <a href="{% url 'crud:add' 'locations' %}" class="btn">Add Location</a>
+    <div>All locations</div>
+    <table>
+        <thead>
+            <tr></tr>
+            <tr>Name</tr>
+        </thead>
+        <tbody>
+            {% for location in locations %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="/locations/{{ location.id }}/">{{ location.warehouse_name }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
+

@@ -1,0 +1,25 @@
+{% extends 'crud/index.html' %}
+
+{% block content %}
+    <a href="{% url 'crud:add' 'inventory' %}" class="btn">Add Inventory</a>
+    <div>All inventory</div>
+    <table>
+        <thead>
+            <tr></tr>
+            <tr>Product</tr>
+            <tr>Stock</tr>
+            <tr>Shelf</tr>
+        </thead>
+        <tbody>
+            {% for item in inventory %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="/inventory/{{ item.id }}/">{{ item.product }}</a></td>
+                    <td>{{ item.stock }}</td>
+                    <td>{{ item.shelf.shelf }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
+

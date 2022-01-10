@@ -1,0 +1,12 @@
+{% extends 'crud/index.html' %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Save">
+    </form>
+    <a href="{% url 'crud:delete' type edit_item.id %}">Delete {{ type }}</a>
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends 'crud/index.html' %}
+
+{% block content %}
+    {% if del_item %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <h4>Are you sure you want to delete {{ del_item }}? This action cannot be undone.</h4>
+            <input type="submit" value="Delete">
+        </form>        
+    {% endif %}
+{% endblock content %}

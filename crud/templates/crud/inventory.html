@@ -16,7 +16,7 @@
                     <td>{{ forloop.counter }}</td>
                     <td><a href="/inventory/{{ item.id }}/">{{ item.product }}</a></td>
                     <td>{{ item.stock }}</td>
-                    <td>{{ item.shelf.shelf }}</td>
+                    <td>{{ item.shelf }}</td>
                 </tr>
             {% endfor %}
         </tbody>

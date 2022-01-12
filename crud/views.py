@@ -1,3 +1,5 @@
+import uuid
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -6,11 +8,16 @@ from .models import Inventory, Location, Product, Shelf
 from .forms import LocationForm, ShelfForm, ProductForm, InventoryForm
 
 def index(request):
-    context = {}
+    context = {
+        'products': Product.objects.all(),
+        'locations': Location.objects.all(),
+        'shelves': Shelf.objects.all(),
+        'inventory': Inventory.objects.all(),
+    }
 
     return render(request, 'crud/index.html', context)
 
-def add(request, item):
+def add(request, item: str):
     item = item.lower()
 
     if item == 'products':
@@ -26,7 +33,6 @@ def add(request, item):
         form = form(request.POST)
 
         if form.is_valid():
-            #Price validation is being handled by MinValueValidator on the Product model
             form.save()
 
             return HttpResponseRedirect(reverse('crud:{}'.format(item)))
@@ -34,27 +40,26 @@ def add(request, item):
         form = form()
     return render(request, 'crud/add_form.html', {'form': form, 'type': item})
 
-def edit(request, item, id):
+def edit(request, item: str, id: uuid.uuid4):
     item = item.lower()
 
     if item == 'products':
         form = ProductForm
-        edit_item = Product.objects.filter(id=id).first()
+        edit_item = Product.objects.get(id=id)
     elif item == 'locations':
         form = LocationForm
-        edit_item = Location.objects.filter(id=id).first()
+        edit_item = Location.objects.get(id=id)
     elif item == 'shelves':
         form = ShelfForm
-        edit_item = Shelf.objects.filter(id=id).first()
+        edit_item = Shelf.objects.get(id=id)
     elif item == 'inventory':
         form = InventoryForm
-        edit_item = Inventory.objects.filter(id=id).first()
+        edit_item = Inventory.objects.get(id=id)
 
     if request.method == 'POST':
         form = form(request.POST, instance=edit_item)
 
         if form.is_valid():
-            #Price validation is being handled by MinValueValidator on the Product model
             form.save()
 
             return HttpResponseRedirect(reverse('crud:{}'.format(item)))
@@ -65,21 +70,21 @@ def edit(request, item, id):
         
     return render(request, 'crud/edit_form.html', context)
 
-def delete(request, item, id):
+def delete(request, item: str, id: uuid.uuid4):
     item = item.lower()
 
     if item == 'products':
         form = ProductForm
-        del_item = Product.objects.filter(id=id).first()
+        del_item = Product.objects.get(id=id)
     elif item == 'locations':
         form = LocationForm
-        del_item = Location.objects.filter(id=id).first()
+        del_item = Location.objects.get(id=id)
     elif item == 'shelves':
         form = ShelfForm
-        del_item = Shelf.objects.filter(id=id).first()
+        del_item = Shelf.objects.get(id=id)
     elif item == 'inventory':
         form = InventoryForm
-        del_item = Inventory.objects.filter(id=id).first()
+        del_item = Inventory.objects.get(id=id)
 
     if request.method == 'POST':
         del_item.delete()

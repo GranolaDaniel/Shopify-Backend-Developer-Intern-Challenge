@@ -1,0 +1,98 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --row-padding: 0.5%;
+}
+
+#header {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100vw;
+    margin-top: 25px;
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+    align-content: center;
+}
+
+h3 {
+    margin-bottom: 10px;
+}
+
+section {
+    display: grid;
+    justify-content: center;
+    place-items: center;
+
+    margin-bottom: 50px;
+}
+
+table {
+    border-radius: 30%;
+
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 75%;
+
+}
+
+tbody tr {
+     & > td {
+        padding: var(--row-padding);
+     }
+    &:nth-child(even) {
+        background-color: #D2D0BA;
+    }
+}
+
+thead th {
+    text-align: left;
+    color: white;
+    background-color: #3772FF;
+    padding: var(--row-padding);
+}
+
+#all-products {
+    thead th:nth-child(1) {
+        width: 10%;
+    }
+    thead th:nth-child(2) {
+        width: 40%;
+    }
+    thead th:nth-child(3) {
+        width: 40%;
+    }
+}
+
+#all-inventory {
+    thead th:nth-child(1) {
+        width: 10%;
+    }
+    thead th:nth-child(2) {
+        width: 30%;
+    }
+    thead th:nth-child(3) {
+        width: 30%;
+    }
+    thead th:nth-child(4) {
+        width: 30%;
+    }
+}
+
+#all-locations {
+    thead th:nth-child(1) {
+        width: 10%;
+    }
+    thead th:nth-child(2) {
+        width: 90%;
+    }
+}
+

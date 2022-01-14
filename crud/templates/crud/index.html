@@ -1,9 +1,14 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{% static 'crud/index.css' %}">
+    {% endblock %}
     <title>CRUD inventory app</title>
 </head>
 <body>
@@ -13,86 +18,74 @@
             <a href="/products/">Products</a>
             <a href="/inventory/">Inventory</a>
             <a href="/locations/">Locations</a>
-            <a href="/shelves/">Shelves</a>
         </header>
     {% endblock header %}
+<div class="wrapper">
     {% block content %}
-        <section id='all-products'>
-            <h3>All products</h3>
-                <table>
-                    <thead>
-                        <tr></tr>
-                        <tr>Name</tr>
-                        <tr>Price</tr>
-                    </thead>
-                    <tbody>
-                        {% for product in products %}
+            <section id='all-products'>
+                <h3>All products</h3>
+                    <table>
+                        <thead>
                             <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td><a href="/products/{{ product.id }}/">{{ product.name }}</a></td>
-                                <td>${{ product.price }}</td>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Price</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-        </section>
-        <section id='all-inventory'>
-            <h3>All inventory</h3>
-                <table>
-                    <thead>
-                        <tr></tr>
-                        <tr>Product</tr>
-                        <tr>Stock</tr>
-                        <tr>Shelf</tr>
-                    </thead>
-                    <tbody>
-                        {% for item in inventory %}
+                        </thead>
+                        <tbody>
+                            {% for product in products %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td><a href="/products/{{ product.id }}/">{{ product.name }}</a></td>
+                                    <td>${{ product.price }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            </section>
+            <section id='all-inventory'>
+                <h3>All inventory</h3>
+                    <table>
+                        <thead>
                             <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td><a href="/inventory/{{ item.id }}/">{{ item.product }}</a></td>
-                                <td>{{ item.stock }}</td>
-                                <td>{{ item.shelf }}</td>
+                                <th></th>
+                                <th>Product</th>
+                                <th>Stock</th>
+                                <th>Location</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-        </section>
-        <section id='all-locations'>
-            <h3>All locations</h3>
-                <table>
-                    <thead>
-                        <tr></tr>
-                        <tr>Name</tr>
-                    </thead>
-                    <tbody>
-                        {% for location in locations %}
+                        </thead>
+                        <tbody>
+                            {% for item in inventory %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td><a href="/inventory/{{ item.id }}/">{{ item.product }}</a></td>
+                                    <td>{{ item.stock }}</td>
+                                    <td>{{ item.location }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            </section>
+            <section id='all-locations'>
+                <h3>All locations</h3>
+                    <table>
+                        <thead>
                             <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td><a href="/locations/{{ location.id }}/">{{ location.warehouse_name }}</a></td>
+                                <th></th>
+                                <th>Name</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-        </section>
-        <section id='all-shelves'>
-            <h3>All shelves</h3>
-            <table>
-                <thead>
-                    <tr></tr>
-                    <tr>Name</tr>
-                    <tr>Location</tr>
-                </thead>
-                <tbody>
-                    {% for shelf in shelves %}
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td><a href="/shelves/{{ shelf.id }}/">{{ shelf.shelf_name }}</a></td>
-                            <td>{{ shelf.warehouse }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </section>
+                        </thead>
+                        <tbody>
+                            {% for location in locations %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td><a href="/locations/{{ location.id }}/">{{ location.name }}</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            </section>
     {% endblock content %}
+</div>
 </body>
 </html>

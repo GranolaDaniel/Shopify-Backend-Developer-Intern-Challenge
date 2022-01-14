@@ -4,14 +4,13 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .models import Inventory, Location, Product, Shelf
-from .forms import LocationForm, ShelfForm, ProductForm, InventoryForm
+from .models import Inventory, Location, Product
+from .forms import LocationForm, ProductForm, InventoryForm
 
 def index(request):
     context = {
         'products': Product.objects.all(),
         'locations': Location.objects.all(),
-        'shelves': Shelf.objects.all(),
         'inventory': Inventory.objects.all(),
     }
 
@@ -24,8 +23,6 @@ def add(request, item: str):
         form = ProductForm
     elif item == 'locations':
         form = LocationForm
-    elif item == 'shelves':
-        form = ShelfForm
     elif item == 'inventory':
         form = InventoryForm
 
@@ -49,9 +46,6 @@ def edit(request, item: str, id: uuid.uuid4):
     elif item == 'locations':
         form = LocationForm
         edit_item = Location.objects.get(id=id)
-    elif item == 'shelves':
-        form = ShelfForm
-        edit_item = Shelf.objects.get(id=id)
     elif item == 'inventory':
         form = InventoryForm
         edit_item = Inventory.objects.get(id=id)
@@ -79,9 +73,6 @@ def delete(request, item: str, id: uuid.uuid4):
     elif item == 'locations':
         form = LocationForm
         del_item = Location.objects.get(id=id)
-    elif item == 'shelves':
-        form = ShelfForm
-        del_item = Shelf.objects.get(id=id)
     elif item == 'inventory':
         form = InventoryForm
         del_item = Inventory.objects.get(id=id)
@@ -105,12 +96,6 @@ def locations(request):
     context = {'locations': Location.objects.all()}
     
     return render(request, 'crud/locations.html', context)
-
-def shelves(request):
-
-    context = {'shelves': Shelf.objects.all()}
-    
-    return render(request, 'crud/shelves.html', context)
 
 def inventory(request):
 

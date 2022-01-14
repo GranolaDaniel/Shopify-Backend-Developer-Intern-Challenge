@@ -1,16 +1,11 @@
 from django.forms import ModelForm
 
-from .models import Location, Shelf, Product, Inventory
+from .models import Location, Product, Inventory
 
 class LocationForm(ModelForm):
     class Meta:
         model = Location
-        fields = ['warehouse_name']
-
-class ShelfForm(ModelForm):
-    class Meta:
-        model = Shelf
-        fields = ['shelf_name', 'warehouse']
+        fields = ['name']
 
 class ProductForm(ModelForm):
     class Meta:
@@ -20,6 +15,6 @@ class ProductForm(ModelForm):
 class InventoryForm(ModelForm):
     class Meta:
         model = Inventory
-        fields = ['stock', 'shelf', 'product']
+        fields = ['stock', 'location', 'product']
 
 

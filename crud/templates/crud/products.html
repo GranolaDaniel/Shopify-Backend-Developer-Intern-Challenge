@@ -2,12 +2,14 @@
 
 {% block content %}
     <a href="{% url 'crud:add' 'products' %}" class="btn">Add Product</a>
-    <div>All products</div>
+    <h3>All products</h3>
     <table>
         <thead>
-            <tr></tr>
-            <tr>Name</tr>
-            <tr>Price</tr>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
         </thead>
         <tbody>
             {% for product in products %}

@@ -2,13 +2,14 @@
 
 {% block content %}
     <a href="{% url 'crud:add' 'inventory' %}" class="btn">Add Inventory</a>
-    <div>All inventory</div>
+    <h3>All inventory</h3>
     <table>
         <thead>
-            <tr></tr>
-            <tr>Product</tr>
-            <tr>Stock</tr>
-            <tr>Shelf</tr>
+            <tr>
+                <th>Product</th>
+                <th>Stock</th>
+                <th>Location</th>
+            </tr>
         </thead>
         <tbody>
             {% for item in inventory %}
@@ -16,7 +17,7 @@
                     <td>{{ forloop.counter }}</td>
                     <td><a href="/inventory/{{ item.id }}/">{{ item.product }}</a></td>
                     <td>{{ item.stock }}</td>
-                    <td>{{ item.shelf }}</td>
+                    <td>{{ item.location }}</td>
                 </tr>
             {% endfor %}
         </tbody>

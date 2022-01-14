@@ -135,22 +135,6 @@ class InventoryTestCase(TestCase):
 
         inv.delete()
         self.assertFalse(Inventory.objects.filter(id=inv.id).exists())
-
-
-    
-    def test_inv_cascade_shelf(self):
-        """Verify that on_delete=CASCADE works for Inventory on its shelf attribute"""
-        inv = Inventory.objects.get(product__name='Test peach')
-        shelf = Shelf.objects.get(shelf_name='Test shelf')
-
-        self.assertTrue(Inventory.objects.filter(id=inv.id).exists())
-        self.assertTrue(Shelf.objects.filter(id=shelf.id).exists())
-
-        shelf.delete()
-
-        self.assertFalse(Shelf.objects.filter(id=shelf.id).exists())
-        self.assertFalse(Inventory.objects.filter(id=inv.id).exists())
-        
     
     def test_inv_cascade_product(self):
         """Verify that on_delete=CASCADE works for Inventory on its product attribute"""

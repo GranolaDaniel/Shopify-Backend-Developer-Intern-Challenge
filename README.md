@@ -4,38 +4,28 @@ This is an inventory management web application with CRUD functionality. The app
 
 ## How to run
 
-1. Open a new terminal/command prompt window.
-2. Ensure that you have Python 3.7+ installed by running
+1. Ensure that you have Python 3.7+ installed by running the following in a terminal/command prompt
     
     `$ python3 --version`
 - If your version is less than 3.7 or if the command is not recognized, please go to https://www.python.org/downloads/ and follow the setup instructions there to install the latest release of Python for your particular OS. 
 
-3. Ensure that you have git installed by running
-
-    `$ git version`
-- If the command is not recognized, please go to https://github.com/git-guides/install-git and follow the setup instructions there to install the latest version of git for your particular OS.
-
-4. Create a new folder by running
-
-    `$ mkdir shopify-challenge`
-
-5. Inside the newly created folder, clone this repo from Github by running
+2. Clone this repo by running
 
     `$ git clone https://github.com/GranolaDaniel/Shopify-Backend-Developer-Intern-Challenge.git`
-6. Create a virtual environment by running
+3. Create a virtual environment by running
 
     `$ python3 -m venv env`
-7. Start the virtual environment by runnning one of the following commands (depending on your OS)
+4. Start the virtual environment by running one of the following commands (depending on your OS)
 
     `$ source env/bin/activate` on Unix/macOS
 
     `env\Scripts\activate.bat` on Windows
-8. Install the dependencies listed in `requirements.txt` by running
+5. Install the dependencies listed in `requirements.txt` by running
 
     `$ pip3 install -r requirements.txt`
 
-9. Finally, run `$ python3 manage.py runserver` to start the server. Note: the server will be started on port 8000 by default, though the output from the most recent command will indicate if a different port was used.
-10. Go to localhost:8000 (or your appropriate port number) in a web browser to view the site.
+6. Finally, run `$ python3 manage.py runserver` to start the server. Note: the server will be started on port 8000 by default, though the output from the most recent command will indicate if a different port was used.
+7. Go to localhost:8000 (or your appropriate port number) in a web browser to view the site.
 
 ## Using the application
 
@@ -56,6 +46,8 @@ If you'd like to add a new item, start by navigating to the corresponding page f
 You can then click the Add Product link and use the form pictured below to create the new product.
 
 ![A screenshot of a webpage showing the new product creation page](./img/new-product.png)
+
+If you'd like to add a product to a specific location, create an inventory item and choose the relevant product and location in the creation form.
 
 ## Running Tests
 
@@ -85,9 +77,7 @@ The Shelf model has a name attribute and a foreign key relationship with the She
 
 Lastly, the Inventory model was added to join individual products with locations. The Inventory model has a stock attribute, and a foreign key relationship with both a product and a shelf. Since the Shelf model is also associated with a location, inventory is inherently associated with a location.
 
-### Why I chose to CASCADE on deletion
-
-For the Inventory model, I've set the model to CASCADE on deletion of either of the foreign keys that it's bound to (Shelf and Product). The Shelf model also cascades, but on its Location foreign key. I've chosen to do this because in both cases, neither of the items can exist without their associated foreign keys. I.e. if a location is removed, no shelves can exist there.
+For the Inventory model, I've set the model to CASCADE on deletion for the Product foreign key. The Shelf model also cascades, but on its Location foreign key. I've chosen to do this because in both cases, neither of the items can exist without those associated foreign keys. I.e. if a location is removed, no shelves can exist there and an inventory item can't exist without a product.
 
 ## Possible future additions
 

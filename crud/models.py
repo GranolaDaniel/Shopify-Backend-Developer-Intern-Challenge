@@ -3,6 +3,7 @@ from decimal import Decimal
 
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.db.models.deletion import SET_NULL
 
 class Location(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -45,7 +46,7 @@ class Inventory(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     stock = models.PositiveIntegerField(default=0, help_text='The amount of product available in this inventory item.')
 
-    shelf = models.ForeignKey(Shelf, blank=True, help_text='The shelf that this inventory is stored on.')
+    shelf = models.ForeignKey(Shelf, blank=True, on_delete=SET_NULL, null=True, help_text='The shelf that this inventory is stored on.')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, help_text='The product contained in the inventory item.')
 
     def __str__(self):

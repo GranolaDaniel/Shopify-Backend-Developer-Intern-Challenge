@@ -89,3 +89,4 @@ For the Inventory model, I've set the model to CASCADE on deletion for the Produ
 - Ability to delete objects in bulk
 - Warning for deletions that cause CASCADE behavior. I.e. deleting a product which in turn removes all associated inventory should alert the user first.
 - Paginate the lists that show items. Currently all items are fetched from the DB at once, which would result in long load times as the number of rows increases. 
+- Filters on the item view pages to allow users to narrow down lists by things like price, types of inventory, etc.

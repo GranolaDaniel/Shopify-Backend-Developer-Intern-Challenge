@@ -2,6 +2,8 @@
 
 This is an inventory management web application with CRUD functionality. The application also features the ability to add locations and assign inventory to them.
 
+While designing this app, I tried to keep the scope focused on the main asks for the assignment. A few of the features that I'd like to have included but were outside of the scope of this project are included in last section of the readme.
+
 ## How to run
 
 1. Ensure that you have Python 3.7+ installed by running the following in a terminal/command prompt
@@ -35,7 +37,7 @@ The home page lists all of the various objects that can be managed in this app. 
 
 ### Editing/deleting items
 
-To edit or delete any of the items, click on the name of the relevent item, and you'll be taken to the edit page for it. You can then use the form there to change any details, or click the delete link at the bottom of the page to remove the item (you'll need to confirm the deletion before any changes are committed).
+To edit or delete any of the items, click on the name of the relevent item, and you'll be taken to the edit page for it. You can then use the form there to change any details, or click the delete link at the bottom of the edit page to remove the item (you'll need to confirm the deletion before any changes are committed).
 
 ### Adding new items
 
@@ -51,7 +53,7 @@ If you'd like to add a product to a specific location, create an inventory item 
 
 ## Running Tests
 
-I've included tests each model and for the ProductForm in the `crud/tests` folder. To start them, run:
+I've included tests for each model and for the ProductForm in the `crud/tests` folder. To start them, run:
 
 `$ python3 manage.py test`
 
@@ -59,7 +61,7 @@ A successful run should output the following:
 
 ![A screenshot of a terminal showing output after all tests were run successfully.](./img/tests.png)
 
-The model tests verify CRUD functionality for each of the four models, and ensures that two of the models follow the expected CASCADE behavior when a linked foreign key instance is deleted (you can read more about that in the architecture section below).
+The model tests verify CRUD functionality for each of the three models, and ensures that the Inventory model follows the expected CASCADE behavior when a linked foreign key instance is deleted (you can read more about that in the architecture section below).
 
 The form test verifies that ProductForms won't be marked as valid if a user tries to enter a price less than 0.1.
 
@@ -69,19 +71,21 @@ I've used [Django's ModelForm class](https://docs.djangoproject.com/en/4.0/topic
 
 ### Model/DB architecture
 
+![A diagram showing the relationships between the various tables in this app's database](./img/dbdiagram.png)
+
 The Product model has both a name and a price attribute. You can think of a product as the individual item that's being sold/stored. 
 
 The Location model has a name attribute. It's used to define locations where inventory is stored.
 
-The Shelf model has a name attribute and a foreign key relationship with the Shelf model so that shelves can be associated with a particular location.
+Lastly, the Inventory model was added to join individual products with locations. The Inventory model has a stock attribute to track the number of stored products, and a foreign key relationship with both a product and a location.
 
-Lastly, the Inventory model was added to join individual products with locations. The Inventory model has a stock attribute, and a foreign key relationship with both a product and a shelf. Since the Shelf model is also associated with a location, inventory is inherently associated with a location.
-
-For the Inventory model, I've set the model to CASCADE on deletion for the Product foreign key. The Shelf model also cascades, but on its Location foreign key. I've chosen to do this because in both cases, neither of the items can exist without those associated foreign keys. I.e. if a location is removed, no shelves can exist there and an inventory item can't exist without a product.
+For the Inventory model, I've set the model to CASCADE on deletion for the Product foreign key, since an inventory item can't exist without an associated product. I've set the deletion behavior for its location foreign key to SET_NULL though, since inventory can still exist without an associated location.
 
 ## Possible future additions
 
-- Ability to add a new foreign key-related item while in another object's form. I.e. add a new product while inside the new inventory item form.
-- Address field for the Location model
+- Ability to add a new foreign key-related item while in another object's form. I.e. add a new product while selecting a product from the dropdown in the inventory form.
+- Address field for the Location model so users can look up where the location is physically located.
+- Sub-location model for dividing up spaces inside locations. I.e. Place inventory on a specific shelf in a warehouse.
 - Ability to delete objects in bulk
-- Warning for deletions that cause CASCADE behavior (i.e. deleting a location which in turn removes all associated shelves -- and in turn inventory -- should alert the user first).
+- Warning for deletions that cause CASCADE behavior. I.e. deleting a product which in turn removes all associated inventory should alert the user first.
+- Paginate the lists that show items. Currently all items are fetched from the DB at once, which would result in long load times as the number of rows increases. 
